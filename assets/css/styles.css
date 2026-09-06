@@ -243,6 +243,61 @@ body.menu-open .nav__toggle span::after { top: 0; transform: rotate(-45deg); }
 .metric__val small { font-size: .62em; font-weight: 500; color: var(--slate); margin-left: .2em; }
 
 /* ==========================================================================
+   Cinematic scroll film — hero reimagined (scroll-scrubbed)
+   ========================================================================== */
+.film { position: relative; background: var(--teal-abyss); }
+.film__stage { position: relative; height: 100svh; min-height: 560px; overflow: hidden; }
+.film__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; will-change: transform; }
+.film__scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(6,20,23,.5) 0%, rgba(6,30,35,.55) 60%, rgba(4,14,17,.8) 100%); }
+.film .hero__canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .55; }
+.film__scenes { position: absolute; inset: 0; z-index: 2; }
+.scene { position: absolute; inset: 0; display: flex; align-items: center; }
+.scene .wrap { width: 100%; }
+.film__title { font-family: var(--font-display); font-weight: 600; color: #fff; font-size: clamp(2.3rem, 6vw, 4.8rem); letter-spacing: -0.038em; line-height: 1.02; max-width: 18ch; }
+.film__sub { color: rgba(255,255,255,.84); font-size: clamp(1.05rem, 1.7vw, 1.4rem); line-height: 1.5; margin-top: 1.4rem; max-width: 42ch; }
+.film__cta { display: flex; gap: 1.1rem; flex-wrap: wrap; align-items: center; margin-top: 2rem; }
+.film__stats { display: flex; gap: clamp(1.5rem, 5vw, 3.5rem); flex-wrap: wrap; margin-top: .5rem; }
+.film__stats b { display: block; font-family: var(--font-display); font-weight: 600; font-size: clamp(2.2rem, 5vw, 3.6rem); color: #fff; letter-spacing: -0.03em; line-height: 1; }
+.film__stats b small { font-size: .5em; font-weight: 500; color: var(--glow); margin-left: .1em; }
+.film__stats span { display: block; margin-top: .5rem; color: rgba(255,255,255,.6); font-size: .9rem; max-width: 16ch; }
+.film__cue { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 3; display: inline-flex; align-items: center; gap: .7rem; color: rgba(255,255,255,.72); font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; }
+.film__cue i { width: 1px; height: 30px; background: rgba(255,255,255,.35); position: relative; overflow: hidden; }
+.film__cue i::after { content: ""; position: absolute; inset: 0; background: var(--glow); animation: scrollpulse 2.4s var(--ease) infinite; }
+.film__progress { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: rgba(255,255,255,.12); z-index: 3; }
+.film__progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--glow)); }
+
+/* Mobile / no-JS: static single-scene hero */
+.scene { display: none; }
+.scene[data-scene="0"] { display: flex; }
+.film__progress, .film__cue { display: none; }
+
+/* Desktop: pinned scroll film */
+@media (min-width: 861px) {
+  .film { height: 420vh; }
+  .film__stage { position: sticky; top: 0; height: 100vh; }
+  .scene { display: flex; opacity: 0; transform: translateY(42px); pointer-events: none; will-change: opacity, transform; }
+  .scene[data-scene="0"] { opacity: 1; transform: none; }
+  .film__progress { display: block; }
+  .film__cue { display: inline-flex; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .film { height: auto !important; }
+  .film__stage { position: relative !important; height: 100svh; }
+  .scene { position: absolute; opacity: 0; }
+  .scene[data-scene="0"] { opacity: 1; }
+}
+
+/* Nav over the dark film (home, before scroll) */
+.nav:not(.is-scrolled) .brand-logo { background-color: #fff; }
+.nav:not(.is-scrolled) .nav__link { color: #fff; opacity: .9; }
+.nav:not(.is-scrolled) .nav__link[aria-current="page"]::after { background: var(--glow); }
+.nav:not(.is-scrolled) .nav__toggle span,
+.nav:not(.is-scrolled) .nav__toggle span::before,
+.nav:not(.is-scrolled) .nav__toggle span::after { background: #fff; }
+/* when the mobile menu is open, links sit on the light dropdown → keep them dark */
+body.menu-open .nav:not(.is-scrolled) .nav__link { color: var(--ink); opacity: 1; }
+
+/* ==========================================================================
    Marquee / trust strip
    ========================================================================== */
 .strip { border-block: 1px solid var(--line); background: var(--surface); overflow: hidden; }

@@ -51,42 +51,52 @@
 
 <main>
 
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <canvas class="hero__canvas" id="hero-canvas"></canvas>
-  <div class="hero__veil"></div>
-  <div class="orb" data-parallax="0.14" style="width:360px;height:360px;top:-70px;right:6%;background:radial-gradient(circle,#2FBFA8,transparent 70%)"></div>
-  <div class="orb" data-parallax="-0.09" style="width:300px;height:300px;bottom:-90px;left:-50px;background:radial-gradient(circle,#0C4D56,transparent 70%)"></div>
-  <div class="wrap">
-    <div class="hero__grid">
-      <div>
-        <p class="eyebrow hero__tag">Climate · Carbon · Capital</p>
-        <h1 class="display hero__title">
-          Sustainability, turned into<br><span class="accent-word">business advantage.</span>
-        </h1>
-        <p class="lead hero__sub">We help boards and executive teams navigate climate risk, decarbonisation, compliance and climate finance — with confidence.</p>
-        <div class="hero__cta">
-          <a class="btn btn--primary" href="contact.html">Book a Consultation
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a class="tlink" href="services.html">Explore services
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+<!-- ================= CINEMATIC SCROLL FILM (hero) ================= -->
+<section class="film" id="film" aria-label="Introduction">
+  <div class="film__stage">
+    <video class="film__video" id="film-video" autoplay muted loop playsinline preload="auto"
+      poster="https://images.unsplash.com/photo-1760693980762-fac4f7558dc6?fm=jpg&q=60&w=1600&auto=format&fit=crop">
+      <source src="https://videos.pexels.com/video-files/17929372/17929372-hd_1920_1080_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/17929372/17929372-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="film__scrim"></div>
+    <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
+
+    <div class="film__scenes">
+      <div class="scene" data-scene="0">
+        <div class="wrap">
+          <p class="eyebrow eyebrow--light">Climate · Carbon · Capital</p>
+          <h1 class="film__title">Sustainability, turned into <span class="accent-word">business advantage.</span></h1>
+          <p class="film__sub">We help boards and executive teams navigate climate risk, decarbonisation, compliance and climate finance — with confidence.</p>
         </div>
       </div>
-      <aside class="hero__panel reveal" aria-label="Global climate signals">
-        <div class="hero__panel-head">
-          <span>Global signals</span>
-          <span class="livedot">Live</span>
+      <div class="scene" data-scene="1">
+        <div class="wrap">
+          <p class="eyebrow eyebrow--light">Global signals · live</p>
+          <div class="film__stats">
+            <div><b>+1.5<small>°C</small></b><span>Global mean temperature anomaly</span></div>
+            <div><b>424<small>ppm</small></b><span>Atmospheric CO₂</span></div>
+            <div><b>2026</b><span>CBAM definitive period</span></div>
+          </div>
+          <p class="film__sub">The pressure is measurable — and so is the opportunity.</p>
         </div>
-        <div class="metric"><span class="metric__label">Global mean temp anomaly</span><span class="metric__val">+1.5<small>°C</small></span></div>
-        <div class="metric"><span class="metric__label">Atmospheric CO₂</span><span class="metric__val">424<small>ppm</small></span></div>
-        <div class="metric"><span class="metric__label">Companies with SBTi targets</span><span class="metric__val">10k<small>+</small></span></div>
-        <div class="metric"><span class="metric__label">CBAM definitive period</span><span class="metric__val">2026</span></div>
-      </aside>
+      </div>
+      <div class="scene" data-scene="2">
+        <div class="wrap">
+          <h2 class="film__title">We turn that exposure into <span class="accent-word">your advantage.</span></h2>
+          <div class="film__cta">
+            <a class="btn btn--light" href="contact.html">Book a Consultation
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="tlink" style="color:#fff" href="services.html">Explore services
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <span class="film__cue" id="film-cue">Scroll to begin <i></i></span>
+    <div class="film__progress" aria-hidden="true"><i id="film-bar"></i></div>
   </div>
-  <span class="hero__scroll">Scroll <i></i></span>
 </section>
 
 <!-- ================= STANDARDS STRIP ================= -->

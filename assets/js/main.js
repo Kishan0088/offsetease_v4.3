@@ -204,17 +204,53 @@
   });
 
   /* ---------- Cinematic video: guard perf on small screens / data-saver -- */
-  var cines = document.querySelectorAll(".cinema__video");
-  if (cines.length) {
-    var small = window.matchMedia("(max-width: 700px)").matches;
-    var saveData = navigator.connection && navigator.connection.saveData;
-    if (reduce || small || saveData) {
-      cines.forEach(function (cine) {
-        cine.removeAttribute("autoplay");
-        cine.preload = "none";
-        try { cine.pause(); } catch (e) {}
-      });
+  var cines = document.querySelectorAll(".cinema__video, .film__video");
+  var smallScreen = window.matchMedia("(max-width: 700px)").matches;
+  var saveData = navigator.connection && navigator.connection.saveData;
+  if (cines.length && (reduce || smallScreen || saveData)) {
+    cines.forEach(function (cine) {
+      cine.removeAttribute("autoplay");
+      cine.preload = "none";
+      try { cine.pause(); } catch (e) {}
+    });
+  }
+
+  /* ---------- Cinematic scroll-film hero (pinned + video scrub) ---------- */
+  var film = document.getElementById("film");
+  if (film && window.matchMedia("(min-width: 861px)").matches && !reduce && !saveData) {
+    var fvideo = document.getElementById("film-video");
+    fvideo.removeAttribute("loop"); fvideo.removeAttribute("autoplay");
+    fvideo.preload = "auto"; try { fvideo.pause(); } catch (e) {}
+    var fscenes = film.querySelectorAll(".scene");
+    var fscrim = film.querySelector(".film__scrim");
+    var fbar = document.getElementById("film-bar");
+    var fcue = document.getElementById("film-cue");
+    var fdur = 0, tTime = 0, cTime = 0;
+    fvideo.addEventListener("loadedmetadata", function () { fdur = fvideo.duration || 0; });
+    function seg(p, a, b, c, d) { if (p <= a || p >= d) return 0; if (p < b) return (p - a) / (b - a); if (p > c) return 1 - (p - c) / (d - c); return 1; }
+    function applyScene(s, o) { if (!s) return; s.style.opacity = o.toFixed(3); s.style.transform = "translateY(" + ((1 - o) * 40).toFixed(1) + "px)"; s.style.pointerEvents = o > 0.6 ? "auto" : "none"; }
+    function onFilm() {
+      var total = film.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      var p = Math.min(1, Math.max(0, -film.getBoundingClientRect().top / total));
+      applyScene(fscenes[0], p < 0.02 ? 1 : seg(p, -1, 0, 0.16, 0.30));
+      applyScene(fscenes[1], seg(p, 0.30, 0.40, 0.55, 0.66));
+      applyScene(fscenes[2], seg(p, 0.66, 0.76, 1.2, 1.3));
+      if (fdur) tTime = p * (fdur - 0.05);
+      fvideo.style.transform = "scale(" + (1 + p * 0.16).toFixed(3) + ")";
+      if (fscrim) fscrim.style.opacity = (0.5 + p * 0.45).toFixed(2);
+      if (fbar) fbar.style.width = (p * 100).toFixed(1) + "%";
+      if (fcue) fcue.style.opacity = p > 0.04 ? "0" : "1";
     }
+    window.addEventListener("scroll", onFilm, { passive: true });
+    window.addEventListener("resize", onFilm);
+    onFilm();
+    (function seek() {
+      requestAnimationFrame(seek);
+      if (!fdur) return;
+      cTime += (tTime - cTime) * 0.16;
+      if (Math.abs(tTime - cTime) > 0.008) { try { fvideo.currentTime = cTime; } catch (e) {} }
+    })();
   }
 
   /* ---------- Region list ↔ 3D globe -------------------------------------- */
