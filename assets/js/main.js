@@ -111,7 +111,7 @@
 
   /* ---------- Service category filter ------------------------------------ */
   var cats = document.querySelectorAll(".svc-cat");
-  var svcs = document.querySelectorAll(".svc[data-cat]");
+  var svcs = document.querySelectorAll(".svc[data-cat], .article[data-cat]");
   if (cats.length) {
     cats.forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -124,6 +124,14 @@
         });
       });
     });
+    // Deep-link: /services.html#<category> activates that filter
+    var hcat = location.hash.replace("#", "");
+    var hbtn = document.querySelector('.svc-cat[data-filter="' + hcat + '"]');
+    if (hbtn) {
+      hbtn.click();
+      var grid = document.getElementById("capabilities");
+      if (grid) setTimeout(function () { grid.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }, 60);
+    }
   }
 
   /* ---------- Methodology active step (scroll-linked) -------------------- */

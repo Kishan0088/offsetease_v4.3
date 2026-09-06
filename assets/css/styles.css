@@ -499,6 +499,38 @@ body.menu-open .nav__toggle span::after { top: 0; transform: rotate(-45deg); }
 .pw-legend b { color: var(--ink); font-weight: 600; }
 
 /* ==========================================================================
+   Solutions — editorial priority list
+   ========================================================================== */
+.sol-list { border-top: 1px solid var(--line); }
+.sol { display: grid; grid-template-columns: auto 1fr auto; gap: clamp(1rem, 3vw, 2.4rem); align-items: center; padding: clamp(1.3rem, 2.5vw, 1.9rem) 0; border-bottom: 1px solid var(--line); position: relative; transition: padding-left .45s var(--ease-out), background .45s; }
+.sol::before { content: ""; position: absolute; left: -100vw; right: -100vw; top: 0; bottom: 0; background: var(--mist); opacity: 0; transition: opacity .45s; z-index: -1; }
+.sol:hover { padding-left: clamp(.5rem, 1.5vw, 1.2rem); }
+.sol:hover::before { opacity: .5; }
+.sol__no { font-family: var(--font-display); font-weight: 600; font-size: .9rem; color: var(--gold); letter-spacing: .04em; }
+.sol__body h3 { font-size: clamp(1.2rem, 2vw, 1.55rem); letter-spacing: -0.02em; margin-bottom: .35rem; }
+.sol__body p { color: var(--slate); font-size: .96rem; max-width: 66ch; }
+.sol__arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line-strong); display: grid; place-items: center; color: var(--teal); flex: none; transition: .45s var(--ease-out); }
+.sol__arrow svg { width: 17px; height: 17px; }
+.sol:hover .sol__arrow { background: var(--teal); border-color: var(--teal); color: #fff; transform: rotate(-45deg); }
+
+/* ==========================================================================
+   Insights page — editorial grid
+   ========================================================================== */
+.filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2.4rem; }
+.article-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+.article { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out), border-color .4s; }
+.article:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: transparent; }
+.article__top { padding: 1.5rem 1.5rem 0; display: flex; align-items: center; justify-content: space-between; }
+.article__cat { font-size: .7rem; letter-spacing: .13em; text-transform: uppercase; color: var(--teal); font-weight: 600; }
+.article__date { font-size: .76rem; color: var(--slate-soft); }
+.article__body { padding: .9rem 1.5rem 1.6rem; display: flex; flex-direction: column; gap: .6rem; flex: 1; }
+.article h3 { font-size: 1.1rem; letter-spacing: -0.015em; line-height: 1.22; }
+.article p { font-size: .9rem; color: var(--slate); flex: 1; }
+.article__more { font-size: .82rem; font-weight: 600; color: var(--teal); display: inline-flex; align-items: center; gap: .4em; margin-top: .3rem; }
+@media (max-width: 1080px) { .article-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .article-grid { grid-template-columns: 1fr; } .sol { grid-template-columns: auto 1fr; } .sol__arrow { display: none; } }
+
+/* ==========================================================================
    Cinematic video moment (scroll storytelling)
    ========================================================================== */
 .cinema { position: relative; min-height: 82vh; display: flex; align-items: center; overflow: hidden; color: #fff; background: var(--teal-abyss); }
