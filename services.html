@@ -57,115 +57,109 @@
   </div>
 </section>
 
-<section class="section" style="padding-top:clamp(1rem,3vw,2rem)">
-  <div class="wrap">
-    <div class="svc-cats reveal" role="tablist" aria-label="Filter services">
-      <button class="svc-cat is-active" data-filter="all">All 15</button>
-      <button class="svc-cat" data-filter="measure">Measure</button>
-      <button class="svc-cat" data-filter="scores">Improve scores</button>
-      <button class="svc-cat" data-filter="comply">Comply</button>
-      <button class="svc-cat" data-filter="reduce">Set targets &amp; reduce</button>
-      <button class="svc-cat" data-filter="markets">Markets &amp; energy</button>
-    </div>
-
-    <div class="svc-grid reveal" data-delay="1" id="capabilities">
-
-      <!-- MEASURE & ACCOUNT -->
-      <article class="svc" data-cat="measure">
+<!-- ================= CAPABILITIES REEL (horizontal scroll act) ================= -->
+<section class="reel" id="capabilities" data-reel aria-label="The 15 capabilities">
+  <div class="reel__pin">
+    <div class="reel__intro"><p class="eyebrow">Capabilities · scroll sideways</p></div>
+    <div class="reel__track">
+      <div class="reel__cat"><span class="reel__cat-no">01</span><h3>Measure</h3><p>Carbon &amp; impact data that stands up to scrutiny.</p></div>
+      <article class="svc reel__card" data-cat="measure">
         <div class="svc__ix"><span class="svc__num">01 · Measure</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
         <h3>GHG Accounting &amp; Carbon Footprint</h3>
         <p>Scope 1, 2 and 3 inventories, audit-ready and aligned to the GHG Protocol — the defensible baseline everything else is built on.</p>
       </article>
-      <article class="svc" data-cat="measure">
+      <article class="svc reel__card" data-cat="measure">
         <div class="svc__ix"><span class="svc__num">02 · Measure</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
         <h3>Product Carbon Footprint (PCF)</h3>
         <p>SKU-level footprints in the format buyers now demand — the cradle-to-gate data that keeps you on the shortlist.</p>
       </article>
-      <article class="svc" data-cat="measure">
+      <article class="svc reel__card" data-cat="measure">
         <div class="svc__ix"><span class="svc__num">03 · Measure</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 3a9 9 0 0 1 0 18M12 3v18" stroke="currentColor" stroke-width="1.6"/></svg></div>
         <h3>Life Cycle Assessment (LCA)</h3>
         <p>ISO 14040/44 evidence across the full value chain — the rigour that turns claims into defensible findings.</p>
       </article>
-      <article class="svc" data-cat="measure">
+      <article class="svc reel__card" data-cat="measure">
         <div class="svc__ix"><span class="svc__num">04 · Measure</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h9l3 3v15H6V3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 13l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>Environmental Product Declaration</h3>
         <p>Verified EPDs that win tenders — third-party declarations that answer the procurement question before it's asked.</p>
       </article>
-
-      <!-- DISCLOSE & COMPLY -->
-      <article class="svc" data-cat="scores">
+      <div class="reel__cat"><span class="reel__cat-no">02</span><h3>Improve scores</h3><p>The ratings buyers gate procurement on.</p></div>
+      <article class="svc reel__card" data-cat="scores">
         <div class="svc__ix"><span class="svc__num">05 · Scores</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5-5-2.6-5 2.6 1-5.5-4-3.9 5.5-.8L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
         <h3>EcoVadis Score Improvement</h3>
         <p>The medal procurement gates on. We close the evidence gaps between your current rating and the one your customers require.</p>
       </article>
-      <article class="svc" data-cat="scores">
+      <article class="svc reel__card" data-cat="scores">
         <div class="svc__ix"><span class="svc__num">06 · Scores</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V9m5 10V5m5 14v-8m5 8V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
         <h3>CDP Reporting &amp; Score</h3>
         <p>An A-to-D− grade, in public. We build the response — and the underlying data — that moves your band in the right direction.</p>
       </article>
-      <article class="svc" data-cat="comply" id="cbam">
+      <div class="reel__cat"><span class="reel__cat-no">03</span><h3>Comply</h3><p>Regulated disclosure &amp; border mechanisms.</p></div>
+      <article class="svc reel__card" data-cat="comply" id="cbam">
         <div class="svc__ix"><span class="svc__num">07 · Comply</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 4v6c0 4-3 6-7 8-4-2-7-4-7-8V7l7-4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
         <h3>CBAM Compliance</h3>
         <p>Verified data beats default values at the EU border. Embedded-emissions accounting that protects your landed cost as the definitive period begins in 2026.</p>
       </article>
-      <article class="svc" data-cat="comply">
+      <article class="svc reel__card" data-cat="comply">
         <div class="svc__ix"><span class="svc__num">08 · Comply</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>ESG &amp; Sustainability Reporting</h3>
         <p>BRSR · CSRD · IFRS S1/S2. Disclosure engineered once, mapped across frameworks — so you report to many standards from a single source of truth.</p>
       </article>
-      <article class="svc" data-cat="comply">
+      <article class="svc reel__card" data-cat="comply">
         <div class="svc__ix"><span class="svc__num">09 · Comply</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>Climate Risk &amp; TCFD</h3>
         <p>Physical and transition risk, quantified and IFRS S2-ready — scenario analysis your auditors and investors will recognise.</p>
       </article>
-      <article class="svc" data-cat="comply">
+      <article class="svc reel__card" data-cat="comply">
         <div class="svc__ix"><span class="svc__num">10 · Comply</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l3 3-3 3-3-3 3-3ZM5 9l3 3-3 3-3-3 3-3Zm14 0l3 3-3 3-3-3 3-3Zm-7 7l3 3-3 3-3-3 3-3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
         <h3>ISCC Certification</h3>
         <p>EU · PLUS · CORSIA · CF. Chain-of-custody certification for sustainable feedstocks, fuels and materials.</p>
       </article>
-      <article class="svc" data-cat="comply">
+      <article class="svc reel__card" data-cat="comply">
         <div class="svc__ix"><span class="svc__num">11 · Comply</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21C7 17 4 13 4 9a8 8 0 0 1 16 0c0 4-3 8-8 12Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>EUDR Compliance</h3>
         <p>Deforestation-free, at plot-level. Geolocation, due diligence and traceability that keep your commodities inside the EU market.</p>
       </article>
-
-      <!-- REDUCE & FINANCE -->
-      <article class="svc" data-cat="reduce" id="sbti">
+      <div class="reel__cat"><span class="reel__cat-no">04</span><h3>Set targets &amp; reduce</h3><p>Science-based commitments &amp; funded pathways.</p></div>
+      <article class="svc reel__card" data-cat="reduce" id="sbti">
         <div class="svc__ix"><span class="svc__num">12 · Reduce</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
         <h3>SBTi Target Setting</h3>
         <p>Validated first time. Near-term and net-zero targets built to the current standard — and to survive review.</p>
       </article>
-      <article class="svc" data-cat="reduce">
+      <article class="svc reel__card" data-cat="reduce">
         <div class="svc__ix"><span class="svc__num">13 · Reduce</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20L20 4M8 4h12v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>Net Zero &amp; Decarbonization</h3>
         <p>A funded pathway, not a pledge. Marginal abatement modelled and sequenced so the plan is finance-able, not aspirational.</p>
       </article>
-      <article class="svc" data-cat="markets">
+      <div class="reel__cat"><span class="reel__cat-no">05</span><h3>Markets &amp; energy</h3><p>Carbon credits &amp; renewable procurement.</p></div>
+      <article class="svc reel__card" data-cat="markets">
         <div class="svc__ix"><span class="svc__num">14 · Markets</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v10M9.5 9.5h4a1.8 1.8 0 0 1 0 3.6h-3a1.8 1.8 0 0 0 0 3.6h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         <h3>Carbon Credits &amp; Markets</h3>
         <p>High-integrity, headline-proof. Sourcing, due diligence and portfolio strategy that won't become tomorrow's liability.</p>
       </article>
-      <article class="svc" data-cat="markets">
+      <article class="svc reel__card" data-cat="markets">
         <div class="svc__ix"><span class="svc__num">15 · Markets</span>
           <svg class="svc__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6l1-7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
         <h3>Renewable Energy (PPAs · RECs)</h3>
         <p>Cut Scope 2 and energy cost at once. Power purchase agreements and certificates structured for both carbon and commercial return.</p>
       </article>
+      <div class="reel__cat reel__end"><span class="reel__cat-no">→</span><h3>Not sure which you need?</h3><p>Tell us the pressure you're facing and we'll map the shortest credible route.</p><a class="btn btn--primary" href="contact.html" style="margin-top:1.2rem;align-self:flex-start">Book a consultation</a></div>
     </div>
+    <div class="reel__progress" aria-hidden="true"><i></i></div>
   </div>
 </section>
 

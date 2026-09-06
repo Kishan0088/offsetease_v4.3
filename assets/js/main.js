@@ -338,6 +338,31 @@
     onTL();
   }
 
+  /* ---------- Horizontal reel (scroll-driven act) ------------------------ */
+  document.querySelectorAll("[data-reel]").forEach(function (reel) {
+    if (!window.matchMedia("(min-width: 861px)").matches || reduce) return;
+    var track = reel.querySelector(".reel__track");
+    var bar = reel.querySelector(".reel__progress i");
+    if (!track) return;
+    function layout() {
+      var dist = Math.max(0, track.scrollWidth - window.innerWidth);
+      reel.style.height = (window.innerHeight + dist) + "px";
+    }
+    function onReel() {
+      var total = reel.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      var p = Math.min(1, Math.max(0, -reel.getBoundingClientRect().top / total));
+      var dist = Math.max(0, track.scrollWidth - window.innerWidth);
+      track.style.transform = "translate3d(" + (-(dist * p)).toFixed(1) + "px,0,0)";
+      if (bar) bar.style.width = (p * 100).toFixed(1) + "%";
+    }
+    layout(); onReel();
+    window.addEventListener("resize", function () { layout(); onReel(); });
+    window.addEventListener("scroll", onReel, { passive: true });
+    // recompute after fonts/images settle
+    setTimeout(function () { layout(); onReel(); }, 800);
+  });
+
   /* ---------- FAQ accordion ---------------------------------------------- */
   document.querySelectorAll(".faq__q").forEach(function (btn) {
     btn.addEventListener("click", function () {

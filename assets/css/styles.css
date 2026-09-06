@@ -421,6 +421,32 @@ body.menu-open .nav:not(.is-scrolled) .nav__link { color: var(--ink); opacity: 1
 .svc-cat.is-active { background: var(--teal); border-color: var(--teal); color: #fff; }
 
 /* ==========================================================================
+   Horizontal reel (scroll-driven act) — Services capabilities
+   ========================================================================== */
+.reel { position: relative; background: var(--surface); border-block: 1px solid var(--line); }
+.reel__pin { position: relative; padding-block: clamp(3rem, 7vw, 6rem); }
+.reel__intro { padding-inline: var(--gutter); margin-bottom: 1.6rem; }
+.reel__track { display: grid; gap: 1.1rem; padding-inline: var(--gutter); }
+.reel__cat { display: flex; flex-direction: column; justify-content: center; padding: 1.6rem 0; }
+.reel__cat-no { font-family: var(--font-mono); color: var(--gold); font-size: .85rem; letter-spacing: .05em; }
+.reel__cat h3 { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: -0.03em; margin: .5rem 0 .5rem; }
+.reel__cat p { color: var(--slate); max-width: 34ch; }
+.reel__card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.7rem 1.6rem 1.5rem; }
+.reel__progress { display: none; }
+
+@media (min-width: 861px) {
+  .reel__pin { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding-block: 0; }
+  .reel__intro { position: absolute; top: clamp(90px, 12vh, 130px); left: 0; }
+  .reel__track { display: flex; grid-template-columns: none; gap: 1.6rem; align-items: stretch; will-change: transform; }
+  .reel__cat { flex: 0 0 clamp(240px, 20vw, 300px); }
+  .reel__card { flex: 0 0 clamp(300px, 25vw, 350px); display: flex; flex-direction: column; }
+  .reel__card p { margin-top: auto; }
+  .reel__end { flex: 0 0 clamp(300px, 25vw, 360px); }
+  .reel__progress { display: block; position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(34px, 6vh, 54px); height: 2px; background: var(--line); }
+  .reel__progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--glow)); }
+}
+
+/* ==========================================================================
    Methodology — the cycle
    ========================================================================== */
 .method { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
