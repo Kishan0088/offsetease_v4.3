@@ -194,6 +194,54 @@
   var yr = document.querySelector("#year");
   if (yr) yr.textContent = new Date().getFullYear();
 
+  /* ---------- Climate Timeline (scrollytelling) -------------------------- */
+  var tl = document.getElementById("timeline");
+  if (tl && window.matchMedia("(min-width: 861px)").matches && !reduce && !saveData) {
+    var tlV0 = tl.querySelector('.tl__video[data-era="0"]');
+    var tlV1 = tl.querySelector('.tl__video[data-era="1"]');
+    var yearEl = document.getElementById("tl-year");
+    var tempEl = document.getElementById("tl-temp");
+    var noteEl = document.getElementById("tl-note");
+    var spineEl = document.getElementById("tl-spine");
+    var flagEl = document.getElementById("tl-flag");
+    var tlScenes = tl.querySelectorAll(".tl-scene");
+    var v1started = false;
+    function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+    function tseg(p, a, b, c, d) { if (p <= a || p >= d) return 0; if (p < b) return (p - a) / (b - a); if (p > c) return 1 - (p - c) / (d - c); return 1; }
+    function onTL() {
+      var total = tl.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      var p = clamp01(-tl.getBoundingClientRect().top / total);
+      var year = Math.round(1850 + p * 200);
+      if (yearEl) yearEl.textContent = year;
+      var temp;
+      if (p < 0.62) { var q = clamp01((p - 0.12) / 0.50); temp = 1.5 * q * q; } // flat, then steep
+      else { temp = 1.5 - ((p - 0.62) / 0.38) * 0.35; } // ease back as removals bite
+      if (tempEl) tempEl.textContent = temp.toFixed(1);
+      if (noteEl) noteEl.textContent = p < 0.12 ? "pre-industrial baseline" : (p < 0.62 ? "warming, vs 1850" : "target: net zero by 2050");
+      // era crossfade: glacier → renewables
+      var toRenew = clamp01((p - 0.55) / 0.18);
+      if (tlV0) tlV0.style.opacity = (1 - toRenew).toFixed(3);
+      if (tlV1) {
+        tlV1.style.opacity = toRenew.toFixed(3);
+        if (!v1started && toRenew > 0.02) { v1started = true; tlV1.preload = "auto"; var pr = tlV1.play && tlV1.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      }
+      // chapters
+      tlScenes.forEach(function (s, i) {
+        var win = [[-1, 0, 0.16, 0.26], [0.24, 0.34, 0.46, 0.56], [0.54, 0.62, 0.70, 0.78], [0.76, 0.84, 1.2, 1.3]][i];
+        var o = i === 0 && p < 0.02 ? 1 : tseg(p, win[0], win[1], win[2], win[3]);
+        s.style.opacity = o.toFixed(3);
+        s.style.transform = "translateY(" + ((1 - o) * 30).toFixed(1) + "px)";
+      });
+      // heating spine + flag
+      if (spineEl) spineEl.style.width = (p * 100).toFixed(1) + "%";
+      if (flagEl) { flagEl.style.left = (p * 100).toFixed(1) + "%"; flagEl.textContent = year; }
+    }
+    window.addEventListener("scroll", onTL, { passive: true });
+    window.addEventListener("resize", onTL);
+    onTL();
+  }
+
   /* ---------- FAQ accordion ---------------------------------------------- */
   document.querySelectorAll(".faq__q").forEach(function (btn) {
     btn.addEventListener("click", function () {
@@ -204,7 +252,7 @@
   });
 
   /* ---------- Cinematic video: guard perf on small screens / data-saver -- */
-  var cines = document.querySelectorAll(".cinema__video, .film__video");
+  var cines = document.querySelectorAll(".cinema__video, .film__video, .tl__video");
   var smallScreen = window.matchMedia("(max-width: 700px)").matches;
   var saveData = navigator.connection && navigator.connection.saveData;
   if (cines.length && (reduce || smallScreen || saveData)) {

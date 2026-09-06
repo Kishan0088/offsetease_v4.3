@@ -273,7 +273,7 @@ body.menu-open .nav__toggle span::after { top: 0; transform: rotate(-45deg); }
 
 /* Desktop: pinned scroll film */
 @media (min-width: 861px) {
-  .film { height: 420vh; }
+  .film { height: 340vh; }
   .film__stage { position: sticky; top: 0; height: 100vh; }
   .scene { display: flex; opacity: 0; transform: translateY(42px); pointer-events: none; will-change: opacity, transform; }
   .scene[data-scene="0"] { opacity: 1; transform: none; }
@@ -536,6 +536,45 @@ body.menu-open .nav:not(.is-scrolled) .nav__link { color: var(--ink); opacity: 1
 .pills { display: flex; flex-wrap: wrap; gap: .6rem; }
 .pill { padding: .5em 1em; border-radius: 100px; background: var(--surface); border: 1px solid var(--line); font-size: .85rem; font-weight: 500; color: var(--slate); }
 .pill b { color: var(--teal); font-weight: 600; }
+
+/* ==========================================================================
+   Climate Timeline — pinned scrollytelling (1850 → Net Zero 2050)
+   ========================================================================== */
+.timeline { position: relative; background: #04141a; }
+.tl__stage { position: relative; height: 100svh; min-height: 600px; overflow: hidden; }
+.tl__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0; will-change: opacity; }
+.tl__video[data-era="0"] { opacity: 1; }
+.tl__scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(4,20,26,.5) 0%, rgba(4,16,20,.6) 55%, rgba(3,10,13,.85) 100%); }
+.tl__hud { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; justify-content: center; pointer-events: none; }
+.tl__eyebrow { color: var(--glow); font-size: .72rem; letter-spacing: .26em; text-transform: uppercase; font-weight: 600; margin-bottom: .4rem; }
+.tl__year { font-family: var(--font-display); font-weight: 600; color: #fff; font-size: clamp(4.5rem, 17vw, 14rem); line-height: .86; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+.tl__temp { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.3rem, 3vw, 2.3rem); color: var(--glow); margin-top: .6rem; font-variant-numeric: tabular-nums; }
+.tl__temp small { color: rgba(255,255,255,.55); font-size: .55em; font-weight: 500; letter-spacing: .02em; margin-left: .5em; }
+.tl__scenes { position: absolute; left: 0; right: 0; bottom: 12%; z-index: 3; pointer-events: none; }
+.tl-scene { position: absolute; left: 0; right: 0; opacity: 0; will-change: opacity, transform; }
+.tl-scene h2 { color: #fff; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.5rem, 3.2vw, 2.5rem); letter-spacing: -0.02em; max-width: 22ch; line-height: 1.1; }
+.tl-scene p { color: rgba(255,255,255,.78); font-size: clamp(1rem, 1.4vw, 1.2rem); margin-top: .8rem; max-width: 46ch; }
+.tl__spine { position: absolute; left: 0; right: 0; bottom: 0; height: 12px; z-index: 4; background: rgba(255,255,255,.08); }
+.tl__spine i { display: block; height: 100%; width: 0;
+  background: linear-gradient(90deg, #072a30 0%, #0C4D56 16%, #14707c 30%, #2FBFA8 44%, #cdbd8a 58%, #C9A24B 70%, #c47a3f 82%, #b6402f 94%, #9c2f26 100%);
+  background-size: 100vw 100%; }
+.tl__spine b { position: absolute; top: -22px; transform: translateX(-50%); left: 0; font-size: .66rem; letter-spacing: .1em; color: #fff; font-weight: 600; white-space: nowrap; background: rgba(4,20,26,.7); padding: 2px 7px; border-radius: 4px; }
+
+/* Mobile / no-JS: static single-frame timeline */
+.tl-scene { display: none; }
+.tl-scene[data-s="0"] { display: block; position: static; opacity: 1; }
+.tl__spine b { display: none; }
+@media (min-width: 861px) {
+  .timeline { height: 460vh; }
+  .tl__stage { position: sticky; top: 0; height: 100vh; }
+  .tl-scene { display: block; }
+  .tl__spine b { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline { height: auto !important; }
+  .tl__stage { position: relative !important; }
+  .tl-scene { position: static; opacity: 0; } .tl-scene[data-s="0"] { opacity: 1; }
+}
 
 /* ==========================================================================
    Warming stripes — global temperature signal (immersive band)

@@ -107,37 +107,38 @@
   </div>
 </div>
 
-<!-- ================= WARMING STRIPES ================= -->
-<section class="stripes" aria-label="Global mean temperature by year, cool to warm">
-  <div class="stripes__label">
-    <div class="wrap">
-      <p>The warmest years on record are the recent ones.</p>
-      <div class="stripes__ends">
-        <b>1850 ·&nbsp; cooler</b>
-        <b>today ·&nbsp; +1.5°C</b>
+<!-- ================= CLIMATE TIMELINE (scrollytelling) ================= -->
+<section class="timeline" id="timeline" aria-label="From 1850 to net zero by 2050">
+  <div class="tl__stage">
+    <video class="tl__video" data-era="0" muted loop playsinline autoplay preload="metadata"
+      poster="https://images.unsplash.com/photo-1777047023536-8e47688b77f9?fm=jpg&q=55&w=1280&auto=format&fit=crop">
+      <source src="https://videos.pexels.com/video-files/8318417/8318417-uhd_2560_1440_25fps.mp4" type="video/mp4">
+    </video>
+    <video class="tl__video" data-era="1" muted loop playsinline autoplay preload="none"
+      poster="https://images.unsplash.com/photo-1612135773893-aa902ee2f6ea?fm=jpg&q=55&w=1280&auto=format&fit=crop">
+      <source src="https://videos.pexels.com/video-files/4733983/4733983-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="tl__scrim"></div>
+
+    <div class="tl__hud">
+      <div class="wrap">
+        <p class="tl__eyebrow">The climate timeline</p>
+        <div class="tl__year" id="tl-year">1850</div>
+        <div class="tl__temp">+<span id="tl-temp">0.0</span>°C<small id="tl-note">pre-industrial baseline</small></div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ================= CINEMATIC MOMENT ================= -->
-<section class="cinema" aria-label="What is at stake">
-  <video class="cinema__video" autoplay muted loop playsinline preload="metadata"
-    poster="https://images.unsplash.com/photo-1760693980762-fac4f7558dc6?fm=jpg&q=55&w=1280&auto=format&fit=crop">
-    <source src="https://videos.pexels.com/video-files/17929372/17929372-uhd_2560_1440_30fps.mp4" type="video/mp4">
-  </video>
-  <div class="cinema__scrim"></div>
-  <div class="wrap">
-    <div class="cinema__inner reveal">
-      <p class="eyebrow eyebrow--light">The stakes</p>
-      <h2>A living system — and a <span class="accent-word">closing window.</span></h2>
-      <p>The world is on course to pass 1.5°C. Keeping the planet liveable now depends on cutting emissions deeply and removing carbon credibly — at the same time. That is the work.</p>
+    <div class="tl__scenes">
+      <div class="wrap">
+        <div class="tl-scene" data-s="0"><h2>For most of history, the line barely moved.</h2><p>A stable climate is the quiet foundation every economy was built on.</p></div>
+        <div class="tl-scene" data-s="1"><h2>Then it climbed — <span class="accent-word">fast.</span></h2><p>A century of emissions, compounding. The warming stripes turn from blue to red.</p></div>
+        <div class="tl-scene" data-s="2"><h2>2025: +1.5°C, and the ice is going.</h2><p>The cost of inaction stops being abstract — it lands on balance sheets, borders and supply chains.</p></div>
+        <div class="tl-scene" data-s="3"><h2>This is where it changes: a <span class="accent-word">funded path to net zero.</span></h2><p>Deep cuts, credible removals, renewable energy — sequenced so the plan actually gets financed. That is our work.</p></div>
+      </div>
     </div>
+
+    <div class="tl__spine"><i id="tl-spine"></i><b id="tl-flag">1850</b></div>
   </div>
-  <span class="cinema__cue">Keep scrolling
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </span>
-  <span class="cinema__source">Aerial footage · Pexels</span>
 </section>
 
 <!-- ================= PHILOSOPHY ================= -->
