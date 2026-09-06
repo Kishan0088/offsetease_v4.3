@@ -155,6 +155,72 @@
   var yr = document.querySelector("#year");
   if (yr) yr.textContent = new Date().getFullYear();
 
+  /* ---------- FAQ accordion ---------------------------------------------- */
+  document.querySelectorAll(".faq__q").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var item = btn.closest(".faq__item");
+      var open = item.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+
+  /* ---------- Cinematic video: guard perf on small screens / data-saver -- */
+  var cine = document.querySelector(".cinema__video");
+  if (cine) {
+    var small = window.matchMedia("(max-width: 700px)").matches;
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (reduce || small || saveData) {
+      cine.removeAttribute("autoplay");
+      cine.preload = "none";
+      try { cine.pause(); } catch (e) {}
+      // keep the poster image as a still backdrop
+    }
+  }
+
+  var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  /* ---------- Cursor glow (desktop, fine pointer) ------------------------ */
+  if (fine && !reduce) {
+    var glow = document.createElement("div");
+    glow.className = "cursor-glow";
+    document.body.appendChild(glow);
+    var gx = 0, gy = 0, cx = 0, cy = 0, gvis = false, graf;
+    function gloop() {
+      cx += (gx - cx) * 0.15; cy += (gy - cy) * 0.15;
+      glow.style.transform = "translate(" + cx + "px," + cy + "px) translate(-50%,-50%)";
+      graf = requestAnimationFrame(gloop);
+    }
+    window.addEventListener("mousemove", function (e) {
+      gx = e.clientX; gy = e.clientY;
+      if (!gvis) { glow.style.opacity = "1"; gvis = true; }
+    }, { passive: true });
+    document.addEventListener("mouseleave", function () { glow.style.opacity = "0"; gvis = false; });
+    gloop();
+
+    /* ---------- Magnetic primary CTAs ------------------------------------ */
+    document.querySelectorAll(".btn--primary, .btn--light").forEach(function (b) {
+      b.addEventListener("mousemove", function (e) {
+        var r = b.getBoundingClientRect();
+        var mx = e.clientX - r.left - r.width / 2;
+        var my = e.clientY - r.top - r.height / 2;
+        b.style.transform = "translate(" + (mx * 0.18).toFixed(1) + "px," + (my * 0.28 - 2).toFixed(1) + "px)";
+      });
+      b.addEventListener("mouseleave", function () { b.style.transform = ""; });
+    });
+
+    /* ---------- 3D tilt cards -------------------------------------------- */
+    document.querySelectorAll(".svc, .value, .post, .ind").forEach(function (card) {
+      card.classList.add("tilt");
+      card.addEventListener("mousemove", function (e) {
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = "perspective(760px) rotateX(" + (-py * 5).toFixed(2) + "deg) rotateY(" + (px * 5).toFixed(2) + "deg) translateY(-4px)";
+      });
+      card.addEventListener("mouseleave", function () { card.style.transform = ""; });
+    });
+  }
+
   /* ---------- Hero canvas: atmospheric carbon-flow field ----------------- */
   var canvas = document.querySelector("#hero-canvas");
   if (canvas && !reduce) {
