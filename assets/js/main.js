@@ -338,6 +338,32 @@
     onTL();
   }
 
+  /* ---------- Methodology film (pinned scenes) --------------------------- */
+  document.querySelectorAll("[data-methodfilm]").forEach(function (mf) {
+    if (!window.matchMedia("(min-width: 861px)").matches || reduce) return;
+    var scenes = mf.querySelectorAll(".mf-scene");
+    var rail = mf.querySelectorAll(".mf__rail li");
+    var bar = mf.querySelector(".mf__progress i");
+    var n = scenes.length;
+    function on() {
+      var total = mf.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      var p = Math.min(1, Math.max(0, -mf.getBoundingClientRect().top / total));
+      var active = Math.min(n - 1, Math.floor(p * n + 0.0001));
+      scenes.forEach(function (s, i) {
+        var c = (i + 0.5) / n, d = Math.abs(p - c), win = (0.5 / n) * 1.6;
+        var o = Math.max(0, 1 - d / win);
+        s.style.opacity = o.toFixed(3);
+        s.style.transform = "translateY(" + ((1 - o) * 38).toFixed(1) + "px)";
+      });
+      rail.forEach(function (r, i) { r.classList.toggle("active", i === active); });
+      if (bar) bar.style.width = (p * 100).toFixed(1) + "%";
+    }
+    window.addEventListener("scroll", on, { passive: true });
+    window.addEventListener("resize", on);
+    on();
+  });
+
   /* ---------- Horizontal reel (scroll-driven act) ------------------------ */
   document.querySelectorAll("[data-reel]").forEach(function (reel) {
     if (!window.matchMedia("(min-width: 861px)").matches || reduce) return;
