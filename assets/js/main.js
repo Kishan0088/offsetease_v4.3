@@ -1,0 +1,199 @@
+/* ==========================================================================
+   OffsetEase v4.3 — Interaction layer
+   ========================================================================== */
+(function () {
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Nav: scroll state, hide-on-scroll, progress ---------------- */
+  var nav = document.querySelector(".nav");
+  var progress = document.querySelector(".nav__progress");
+  var lastY = 0;
+  function onScroll() {
+    var y = window.pageYOffset;
+    if (nav) {
+      nav.classList.toggle("is-scrolled", y > 24);
+      if (!document.body.classList.contains("menu-open")) {
+        nav.classList.toggle("is-hidden", y > lastY && y > 400);
+      }
+    }
+    if (progress) {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.transform = "scaleX(" + (h > 0 ? y / h : 0) + ")";
+    }
+    lastY = y;
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Mobile menu ------------------------------------------------- */
+  var toggle = document.querySelector(".nav__toggle");
+  if (toggle) {
+    toggle.addEventListener("click", function () {
+      var open = document.body.classList.toggle("menu-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    document.querySelectorAll(".nav__links a").forEach(function (a) {
+      a.addEventListener("click", function () { document.body.classList.remove("menu-open"); });
+    });
+  }
+
+  /* ---------- Scroll reveal ---------------------------------------------- */
+  var revs = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    revs.forEach(function (el) { el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
+    revs.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------- Count-up --------------------------------------------------- */
+  function countUp(el) {
+    var target = parseFloat(el.dataset.count);
+    var dec = (el.dataset.count.split(".")[1] || "").length;
+    var dur = 1600, start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      var val = (target * eased).toFixed(dec);
+      el.firstChild.nodeValue = Number(val).toLocaleString("en-US");
+      if (p < 1) requestAnimationFrame(step);
+      else el.firstChild.nodeValue = target.toLocaleString("en-US");
+    }
+    requestAnimationFrame(step);
+  }
+  var counters = document.querySelectorAll("[data-count]");
+  if (reduce || !("IntersectionObserver" in window)) {
+    counters.forEach(function (el) { el.firstChild.nodeValue = parseFloat(el.dataset.count).toLocaleString("en-US"); });
+  } else {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); } });
+    }, { threshold: 0.6 });
+    counters.forEach(function (el) { cio.observe(el); });
+  }
+
+  /* ---------- Service category filter ------------------------------------ */
+  var cats = document.querySelectorAll(".svc-cat");
+  var svcs = document.querySelectorAll(".svc[data-cat]");
+  if (cats.length) {
+    cats.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        cats.forEach(function (b) { b.classList.remove("is-active"); });
+        btn.classList.add("is-active");
+        var f = btn.dataset.filter;
+        svcs.forEach(function (s) {
+          var show = f === "all" || s.dataset.cat === f;
+          s.style.display = show ? "" : "none";
+        });
+      });
+    });
+  }
+
+  /* ---------- Methodology active step (scroll-linked) -------------------- */
+  var msteps = document.querySelectorAll(".mstep");
+  var cyclesegs = document.querySelectorAll(".cycle [data-seg]");
+  function setStep(i) {
+    msteps.forEach(function (s, k) { s.classList.toggle("is-active", k === i); });
+    cyclesegs.forEach(function (s, k) { s.style.opacity = k === i ? "1" : "0.28"; });
+  }
+  if (msteps.length) {
+    setStep(0);
+    msteps.forEach(function (s, i) { s.addEventListener("mouseenter", function () { setStep(i); }); });
+  }
+
+  /* ---------- Contact form (client-side confirmation) -------------------- */
+  var form = document.querySelector("#consult-form");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var ok = form.querySelector(".form__ok");
+      if (ok) { ok.classList.add("show"); ok.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); }
+      form.querySelectorAll("input, select, textarea").forEach(function (f) {
+        if (f.type !== "checkbox") f.value = "";
+      });
+    });
+  }
+
+  /* ---------- Footer year ------------------------------------------------ */
+  var yr = document.querySelector("#year");
+  if (yr) yr.textContent = new Date().getFullYear();
+
+  /* ---------- Hero canvas: atmospheric carbon-flow field ----------------- */
+  var canvas = document.querySelector("#hero-canvas");
+  if (canvas && !reduce) {
+    var ctx = canvas.getContext("2d");
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W, H, particles = [], mouse = { x: -999, y: -999 };
+    var COUNT = 0;
+
+    function resize() {
+      var r = canvas.getBoundingClientRect();
+      W = r.width; H = r.height;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      COUNT = Math.min(90, Math.floor((W * H) / 16000));
+      init();
+    }
+    function init() {
+      particles = [];
+      for (var i = 0; i < COUNT; i++) {
+        particles.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.28,
+          vy: (Math.random() - 0.5) * 0.28,
+          r: Math.random() * 1.6 + 0.6
+        });
+      }
+    }
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += p.vx; p.y += p.vy;
+        // gentle mouse repulsion
+        var dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
+        if (d2 < 14000) { var f = (14000 - d2) / 14000 * 0.4; p.x += dx / Math.sqrt(d2) * f; p.y += dy / Math.sqrt(d2) * f; }
+        if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20;
+        if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(12,77,86,0.55)";
+        ctx.fill();
+      }
+      // connective lines
+      for (var a = 0; a < particles.length; a++) {
+        for (var b = a + 1; b < particles.length; b++) {
+          var pa = particles[a], pb = particles[b];
+          var ddx = pa.x - pb.x, ddy = pa.y - pb.y, dist = ddx * ddx + ddy * ddy;
+          if (dist < 12000) {
+            var op = (1 - dist / 12000) * 0.32;
+            ctx.strokeStyle = "rgba(47,191,168," + op + ")";
+            ctx.lineWidth = 0.6;
+            ctx.beginPath(); ctx.moveTo(pa.x, pa.y); ctx.lineTo(pb.x, pb.y); ctx.stroke();
+          }
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    }
+    var raf;
+    window.addEventListener("mousemove", function (e) {
+      var r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    });
+    window.addEventListener("mouseleave", function () { mouse.x = -999; mouse.y = -999; });
+    var rt;
+    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(resize, 180); });
+    resize();
+    tick();
+    // pause when off-screen
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { cancelAnimationFrame(raf); } else { raf = requestAnimationFrame(tick); }
+    });
+  }
+})();
