@@ -77,6 +77,28 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 p { margin: 0; }
 ::selection { background: var(--teal); color: #fff; }
 
+/* Page-transition curtain (cinematic transitions between pages) */
+.curtain { position: fixed; inset: 0; z-index: 2500; background: var(--teal-abyss); transform: translateY(100%); pointer-events: none; display: grid; place-items: center; will-change: transform; }
+.curtain__mark { width: 132px; height: 46px; background: #fff; opacity: 0;
+  -webkit-mask: url("../img/offsetease-logo.png") center / contain no-repeat; mask: url("../img/offsetease-logo.png") center / contain no-repeat;
+  transition: opacity .3s var(--ease); }
+.curtain.covered { transform: translateY(0); transition: none; }
+.curtain.cover { transform: translateY(0); transition: transform .5s cubic-bezier(.76,0,.24,1); }
+.curtain.cover .curtain__mark { opacity: .92; transition-delay: .12s; }
+.curtain.reveal { transform: translateY(-100%); transition: transform .72s cubic-bezier(.76,0,.24,1); }
+@media (prefers-reduced-motion: reduce) { .curtain { display: none !important; } }
+
+/* Custom cursor (desktop, fine pointer) */
+.has-cursor, .has-cursor a, .has-cursor button, .has-cursor .svc, .has-cursor .sol, .has-cursor .region, .has-cursor .faq__q { cursor: none; }
+.has-cursor input, .has-cursor textarea, .has-cursor select { cursor: auto; }
+.cur-dot { position: fixed; top: 0; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); z-index: 95; pointer-events: none; transform: translate(-50%,-50%); transition: width .3s var(--ease), height .3s var(--ease), background .3s, opacity .3s; }
+.cur-ring { position: fixed; top: 0; left: 0; width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--teal); opacity: .45; z-index: 95; pointer-events: none; transform: translate(-50%,-50%); transition: width .35s var(--ease), height .35s var(--ease), opacity .3s, border-color .3s, background .3s; }
+.cur-ring.is-hover { width: 66px; height: 66px; opacity: 1; border-color: var(--glow); background: rgba(47,191,168,.07); }
+.cur-dot.is-hover { width: 0; height: 0; }
+.cur-ring.is-dark, .cur-dot.is-dark { border-color: #fff; }
+.cur-dot.is-dark { background: #fff; }
+@media (hover: none) { .cur-dot, .cur-ring { display: none !important; } }
+
 /* Film grain (Organic Film) */
 body::after {
   content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .05; mix-blend-mode: soft-light;

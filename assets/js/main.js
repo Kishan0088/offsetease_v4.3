@@ -15,6 +15,33 @@
     setTimeout(function () { pre.classList.add("done"); }, 3000);
   }
 
+  /* ---------- Page-transition curtain ----------------------------------- */
+  var curtain = document.querySelector(".curtain");
+  if (curtain && !reduce) {
+    try {
+      if (sessionStorage.getItem("oe_nav")) {
+        sessionStorage.removeItem("oe_nav");
+        curtain.classList.add("covered");
+        void curtain.offsetHeight;
+        curtain.classList.remove("covered");
+        curtain.classList.add("reveal");
+        setTimeout(function () { curtain.classList.remove("reveal"); }, 800);
+      }
+    } catch (e) {}
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest("a");
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+      var href = a.getAttribute("href");
+      if (!href || a.target === "_blank" || href.charAt(0) === "#" ||
+          href.indexOf("mailto:") === 0 || href.indexOf("tel:") === 0 || /^https?:\/\//.test(href)) return;
+      if (!/\.html(\?|#|$)/.test(href)) return;
+      e.preventDefault();
+      try { sessionStorage.setItem("oe_nav", "1"); } catch (e2) {}
+      curtain.classList.add("cover");
+      setTimeout(function () { window.location.href = href; }, 500);
+    });
+  }
+
   /* ---------- Lenis smooth inertia scroll -------------------------------- */
   if (!reduce && typeof Lenis !== "undefined") {
     try {
@@ -397,6 +424,30 @@
     }, { passive: true });
     document.addEventListener("mouseleave", function () { glow.style.opacity = "0"; gvis = false; });
     gloop();
+
+    // precise dot + trailing ring with hover states
+    document.documentElement.classList.add("has-cursor");
+    var dot = document.createElement("div"); dot.className = "cur-dot";
+    var ring = document.createElement("div"); ring.className = "cur-ring";
+    document.body.appendChild(dot); document.body.appendChild(ring);
+    var rx = 0, ry = 0;
+    function cloop() {
+      rx += (gx - rx) * 0.2; ry += (gy - ry) * 0.2;
+      dot.style.transform = "translate(" + gx + "px," + gy + "px) translate(-50%,-50%)";
+      ring.style.transform = "translate(" + rx.toFixed(1) + "px," + ry.toFixed(1) + "px) translate(-50%,-50%)";
+      requestAnimationFrame(cloop);
+    }
+    cloop();
+    var hoverSel = "a, button, .svc, .sol, .region, .faq__q, .article, .post, .value, .ind, .svc-cat, .chapters a";
+    document.addEventListener("mouseover", function (e) {
+      if (e.target.closest && e.target.closest(hoverSel)) { ring.classList.add("is-hover"); dot.classList.add("is-hover"); }
+    });
+    document.addEventListener("mouseout", function (e) {
+      var to = e.relatedTarget;
+      if (e.target.closest && e.target.closest(hoverSel) && !(to && to.closest && to.closest(hoverSel))) {
+        ring.classList.remove("is-hover"); dot.classList.remove("is-hover");
+      }
+    });
 
     /* ---------- Magnetic primary CTAs ------------------------------------ */
     document.querySelectorAll(".btn--primary, .btn--light").forEach(function (b) {
