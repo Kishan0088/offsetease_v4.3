@@ -46,6 +46,11 @@ python3 -m http.server 8080
 
 Then visit `http://localhost:8080`.
 
+## Brand & imagery
+
+- **Logo:** the official OffsetEase artwork (`assets/img/offsetease-logo.png`, sourced from offsetease.com) is used unchanged. It is applied as a CSS mask so it renders in brand teal on light surfaces and white on the dark footer — the artwork itself is never altered. Favicons are the official `favicon.ico` / `favicon.png` / `apple-touch-icon.png`.
+- **Photography:** cinematic, topic-relevant imagery (Earth from space, forest canopy, wind turbines, solar farm) is served from the Unsplash CDN, given a teal duotone scrim so it reads as bespoke and on-brand. All are free under the [Unsplash License](https://unsplash.com/license). Credits — Earth, forest canopy, wind turbines, solar farm via Unsplash.
+
 ## Notes
 
 - The contact form is a front-end prototype (client-side confirmation only); wire it to an email/CRM endpoint before production use.

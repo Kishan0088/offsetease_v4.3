@@ -164,12 +164,18 @@ body.menu-open .nav__toggle span::after { top: 0; transform: rotate(-45deg); }
 .nav__progress { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; transform: scaleX(0); transform-origin: left; background: linear-gradient(90deg, var(--teal), var(--glow)); opacity: 0; transition: opacity .4s; }
 .nav.is-scrolled .nav__progress { opacity: 1; }
 
-/* Logo — sunburst mark + FFSETEASE (the ring is the O) */
-.logo { display: inline-flex; align-items: center; gap: .12rem; color: var(--ink); }
-.logo__mark { width: auto; height: 38px; flex: none; color: var(--teal); overflow: visible; transition: transform .6s var(--ease-out); }
-.logo:hover .logo__mark { transform: rotate(-12deg); }
-.logo__word { font-family: var(--font-display); font-weight: 700; font-size: 1.18rem; letter-spacing: 0.005em; text-transform: uppercase; margin-left: -.06em; }
-.footer .logo__mark { color: #fff; }
+/* Logo — official OffsetEase artwork, tinted via mask (shape unchanged) */
+.logo { display: inline-flex; align-items: center; }
+.brand-logo {
+  display: block; height: 40px; aspect-ratio: 454 / 252; width: auto; flex: none;
+  background-color: var(--teal);
+  -webkit-mask: url("../img/offsetease-logo.png") left center / contain no-repeat;
+          mask: url("../img/offsetease-logo.png") left center / contain no-repeat;
+  transition: background-color .3s, transform .5s var(--ease-out);
+}
+.logo:hover .brand-logo { transform: translateY(-1px); }
+.footer .brand-logo { background-color: #fff; height: 42px; }
+@media (max-width: 560px) { .brand-logo { height: 34px; } }
 
 /* ==========================================================================
    Hero
@@ -294,6 +300,13 @@ body.menu-open .nav__toggle span::after { top: 0; transform: rotate(-45deg); }
    ========================================================================== */
 .band { background: var(--teal-abyss); color: #fff; position: relative; overflow: hidden; }
 .band .eyebrow, .band .muted { color: rgba(255,255,255,.62); }
+.band__photo, .cta__photo {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  z-index: 0; opacity: .5; filter: grayscale(.38) saturate(.85) contrast(1.02);
+}
+.band__scrim { position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(6,30,35,.7), rgba(6,30,35,.64)); }
+.cta__photo { border-radius: inherit; opacity: .5; }
+.cta__scrim { position: absolute; inset: 0; z-index: 0; border-radius: inherit; background: linear-gradient(110deg, rgba(6,46,52,.9) 0%, rgba(9,58,65,.68) 55%, rgba(12,77,86,.5) 100%); }
 .band__mesh { position: absolute; inset: 0; opacity: .5; pointer-events: none;
   background:
     radial-gradient(60% 60% at 85% 20%, rgba(47,191,168,.22), transparent 60%),
