@@ -336,6 +336,18 @@ body.menu-open .nav__toggle span::after { top: 0; transform: rotate(-45deg); }
    ========================================================================== */
 .reach { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
 .globe { aspect-ratio: 1; max-width: 480px; width: 100%; margin-inline: auto; }
+/* Interactive 3D Earth (progressive enhancement) */
+.earth3d { position: relative; aspect-ratio: 1; max-width: 480px; width: 100%; margin-inline: auto; border-radius: 50%; overflow: hidden;
+  background: radial-gradient(circle at 42% 36%, #0d3138 0%, #061a20 55%, #02090c 100%);
+  box-shadow: inset 0 0 60px rgba(0,0,0,.6), 0 30px 80px -30px rgba(6,46,52,.5); cursor: grab; touch-action: pan-y; }
+.earth3d:active { cursor: grabbing; }
+.earth3d canvas { position: absolute; inset: 0; display: block; }
+.earth3d__fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; transition: opacity .8s var(--ease); }
+.earth3d.is-live .earth3d__fallback { opacity: 0; }
+.earth3d__hint { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 3; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.62); display: inline-flex; align-items: center; gap: .5em; opacity: 0; transition: opacity .6s var(--ease); pointer-events: none; }
+.earth3d.is-live .earth3d__hint { opacity: 1; }
+@media (hover: none) { .earth3d__hint::after { content: "· touch to spin"; } }
+
 .reach__regions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 2rem; }
 .region { background: var(--surface); padding: 1.1rem 1.3rem; }
 .region b { font-size: .98rem; font-weight: 600; display: block; }

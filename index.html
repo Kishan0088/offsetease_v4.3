@@ -407,32 +407,10 @@
         </div>
       </div>
       <div class="globe reveal" data-delay="2">
-        <svg viewBox="0 0 400 400" role="img" aria-label="Global operations">
-          <defs>
-            <radialGradient id="gl" cx="38%" cy="32%" r="75%">
-              <stop offset="0" stop-color="#12656F"/><stop offset="1" stop-color="#062E34"/>
-            </radialGradient>
-          </defs>
-          <circle cx="200" cy="200" r="150" fill="url(#gl)"/>
-          <g fill="none" stroke="#2FBFA8" stroke-width="1" opacity="0.5">
-            <ellipse cx="200" cy="200" rx="150" ry="50"/>
-            <ellipse cx="200" cy="200" rx="150" ry="100"/>
-            <ellipse cx="200" cy="200" rx="110" ry="150"/>
-            <ellipse cx="200" cy="200" rx="55" ry="150"/>
-            <line x1="50" y1="200" x2="350" y2="200"/>
-          </g>
-          <circle cx="200" cy="200" r="150" fill="none" stroke="#2FBFA8" stroke-width="1.5" opacity="0.7"/>
-          <!-- nodes -->
-          <g fill="#fff">
-            <circle cx="235" cy="215" r="4"/><circle cx="180" cy="150" r="4"/><circle cx="255" cy="185" r="3.5"/><circle cx="260" cy="230" r="3.5"/><circle cx="150" cy="250" r="3.5"/><circle cx="290" cy="260" r="3.5"/>
-          </g>
-          <g stroke="#2FBFA8" stroke-width="1.4" fill="none" opacity="0.85">
-            <path d="M235 215 Q210 150 180 150"><animate attributeName="opacity" values="0.2;1;0.2" dur="4s" repeatCount="indefinite"/></path>
-            <path d="M235 215 Q260 190 255 185"><animate attributeName="opacity" values="0.2;1;0.2" dur="4s" begin="1s" repeatCount="indefinite"/></path>
-            <path d="M235 215 Q250 235 260 230"><animate attributeName="opacity" values="0.2;1;0.2" dur="4s" begin="2s" repeatCount="indefinite"/></path>
-            <path d="M235 215 Q190 240 150 250"><animate attributeName="opacity" values="0.2;1;0.2" dur="4s" begin="1.5s" repeatCount="indefinite"/></path>
-          </g>
-        </svg>
+        <div class="earth3d" id="earth3d" role="img" aria-label="Interactive 3D globe of Earth showing the regions OffsetEase serves">
+          <img class="earth3d__fallback" src="https://images.unsplash.com/photo-1777047023536-8e47688b77f9?fm=jpg&q=62&w=900&auto=format&fit=crop" alt="Planet Earth seen from space" loading="lazy" decoding="async">
+          <span class="earth3d__hint" aria-hidden="true">Drag to explore</span>
+        </div>
       </div>
     </div>
   </div>

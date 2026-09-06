@@ -229,6 +229,33 @@
     });
   }
 
+  /* ---------- Lazy-load the 3D Earth (Three.js) near viewport ------------ */
+  var earthEl = document.getElementById("earth3d");
+  if (earthEl && !reduce) {
+    var earthLoaded = false;
+    function loadEarth() {
+      if (earthLoaded) return; earthLoaded = true;
+      var s = document.createElement("script");
+      s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+      s.onload = function () {
+        var e = document.createElement("script");
+        e.src = "assets/js/earth.js";
+        document.body.appendChild(e);
+      };
+      document.body.appendChild(s);
+    }
+    if ("IntersectionObserver" in window) {
+      var eo = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { loadEarth(); eo.disconnect(); }
+      }, { rootMargin: "600px" });
+      eo.observe(earthEl);
+    }
+    // Fallbacks so the globe always initialises past first paint
+    window.addEventListener("scroll", loadEarth, { once: true, passive: true });
+    window.addEventListener("touchstart", loadEarth, { once: true, passive: true });
+    setTimeout(loadEarth, 4500);
+  }
+
   /* ---------- Hero canvas: atmospheric carbon-flow field ----------------- */
   var canvas = document.querySelector("#hero-canvas");
   if (canvas && !reduce) {
