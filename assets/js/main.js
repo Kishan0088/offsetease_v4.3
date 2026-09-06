@@ -69,8 +69,38 @@
     });
   }
 
-  /* ---------- Scroll reveal ---------------------------------------------- */
-  var revs = document.querySelectorAll(".reveal");
+  /* ---------- Kinetic split-text (Editorial Kinetic) --------------------- */
+  function splitKinetic(el) {
+    if (el.dataset.kin || reduce) return;
+    el.dataset.kin = "1"; el.classList.add("kin");
+    var nodes = [].slice.call(el.childNodes); el.innerHTML = "";
+    nodes.forEach(function (node) {
+      if (node.nodeType === 3) {
+        node.textContent.split(/(\s+)/).forEach(function (tok) {
+          if (tok === "") return;
+          if (!tok.trim()) { el.appendChild(document.createTextNode(tok)); return; }
+          var kw = document.createElement("span"); kw.className = "kw";
+          var inner = document.createElement("span"); inner.textContent = tok;
+          kw.appendChild(inner); el.appendChild(kw);
+        });
+      } else if (node.nodeName === "BR") {
+        el.appendChild(node);
+      } else {
+        var kw2 = document.createElement("span"); kw2.className = "kw";
+        var inner2 = document.createElement("span"); inner2.appendChild(node);
+        kw2.appendChild(inner2); el.appendChild(kw2);
+      }
+    });
+    el.querySelectorAll(".kw > span").forEach(function (s, i) { s.style.setProperty("--kd", (i * 55) + "ms"); });
+  }
+  if (!reduce) {
+    document.querySelectorAll(".display, .film__title, .tl-scene h2").forEach(splitKinetic);
+    // cinematic clip-wipe on select media as it enters
+    document.querySelectorAll(".feat__media, .post__img, .cinema__inner, .pathway__chart").forEach(function (el) { el.classList.add("wipe"); });
+  }
+
+  /* ---------- Scroll reveal (reveal + kinetic + wipe) -------------------- */
+  var revs = document.querySelectorAll(".reveal, .kin, .wipe");
   if (reduce || !("IntersectionObserver" in window)) {
     revs.forEach(function (el) { el.classList.add("in"); });
   } else {
@@ -81,6 +111,45 @@
     }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
     revs.forEach(function (el) { io.observe(el); });
   }
+
+  /* ---------- Scroll-driven color world --------------------------------- */
+  if (!reduce) {
+    var worldTick = false;
+    function worldUpdate() {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var w = h > 0 ? Math.min(1, window.pageYOffset / h) : 0;
+      document.documentElement.style.setProperty("--world", w.toFixed(3));
+      worldTick = false;
+    }
+    window.addEventListener("scroll", function () { if (!worldTick) { requestAnimationFrame(worldUpdate); worldTick = true; } }, { passive: true });
+    worldUpdate();
+  }
+
+  /* ---------- Chapter dots (continuous scroll-film) --------------------- */
+  (function () {
+    var candidates = [["film", "Intro"], ["timeline", "Timeline"], ["solutions", "Solutions"], ["services", "Services"], ["industries", "Industries"]];
+    var present = candidates.filter(function (c) { return document.getElementById(c[0]); });
+    if (present.length < 3 || window.matchMedia("(max-width: 900px)").matches) return;
+    var nav = document.createElement("nav"); nav.className = "chapters"; nav.setAttribute("aria-label", "Chapters");
+    present.forEach(function (c) {
+      var a = document.createElement("a"); a.href = "#" + c[0]; a.dataset.label = c[1]; a.setAttribute("aria-label", c[1]);
+      a.addEventListener("click", function (e) { e.preventDefault(); var t = document.getElementById(c[0]); if (window.__lenis) window.__lenis.scrollTo(t, { offset: -10 }); else t.scrollIntoView(); });
+      nav.appendChild(a);
+    });
+    document.body.appendChild(nav);
+    var dots = nav.querySelectorAll("a");
+    if ("IntersectionObserver" in window) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            var id = e.target.id;
+            dots.forEach(function (d) { d.classList.toggle("active", d.getAttribute("href") === "#" + id); });
+          }
+        });
+      }, { rootMargin: "-45% 0px -45% 0px" });
+      present.forEach(function (c) { cio.observe(document.getElementById(c[0])); });
+    }
+  })();
 
   /* ---------- Draw-on-scroll (SVG line drawing) -------------------------- */
   var draws = document.querySelectorAll("[data-draw]");
