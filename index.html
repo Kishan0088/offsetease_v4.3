@@ -21,12 +21,8 @@
 <header class="nav" id="nav">
   <div class="wrap nav__inner">
     <a class="logo" href="index.html" aria-label="OffsetEase home">
-      <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true">
-        <rect width="64" height="64" rx="15" fill="#0C4D56"/>
-        <path d="M32 13c-9 8-14 15-14 23a14 14 0 0 0 28 0c0-8-5-15-14-23Z" fill="none" stroke="#2FBFA8" stroke-width="3.2" stroke-linejoin="round"/>
-        <path d="M32 46V27M32 33l7-6M32 39l-6-5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span><b>Offset</b><span>Ease</span></span>
+      <svg class="logo__mark" viewBox="0 0 140 190" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="11" stroke-linecap="round"><line x1="106.5" y1="56.5" x2="113.6" y2="9"/><line x1="97.8" y1="56" x2="95.4" y2="8.1"/><line x1="77.7" y1="62.1" x2="54.4" y2="22.4"/><line x1="63.7" y1="75.1" x2="27.5" y2="50.2"/><line x1="56.5" y1="93.5" x2="9" y2="86.4"/><line x1="58.7" y1="115.2" x2="19.3" y2="129.8"/><line x1="69.3" y1="131.5" x2="38.7" y2="163.1"/><line x1="84.8" y1="141.3" x2="71.6" y2="177"/></g><circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" stroke-width="13"/></svg>
+      <span class="logo__word" aria-hidden="true">FFSETEASE</span>
     </a>
     <nav class="nav__links" aria-label="Primary">
       <a class="nav__link" href="index.html" aria-current="page">Home</a>
@@ -48,6 +44,8 @@
 <section class="hero">
   <canvas class="hero__canvas" id="hero-canvas"></canvas>
   <div class="hero__veil"></div>
+  <div class="orb" data-parallax="0.14" style="width:360px;height:360px;top:-70px;right:6%;background:radial-gradient(circle,#2FBFA8,transparent 70%)"></div>
+  <div class="orb" data-parallax="-0.09" style="width:300px;height:300px;bottom:-90px;left:-50px;background:radial-gradient(circle,#0C4D56,transparent 70%)"></div>
   <div class="wrap">
     <div class="hero__grid">
       <div>
@@ -87,6 +85,19 @@
     <span class="strip__item">SBTi</span><span class="strip__item">GHG Protocol</span><span class="strip__item">ISO 14064 / 14067</span><span class="strip__item">TCFD · IFRS S1–S2</span><span class="strip__item">ISAE 3000 · ISSA 5000</span><span class="strip__item">CBAM · CSDDD</span><span class="strip__item">GRI · CDP</span><span class="strip__item">PAS 2050 · EPD</span>
   </div>
 </div>
+
+<!-- ================= WARMING STRIPES ================= -->
+<section class="stripes" aria-label="Global mean temperature by year, cool to warm">
+  <div class="stripes__label">
+    <div class="wrap">
+      <p>The warmest years on record are the recent ones.</p>
+      <div class="stripes__ends">
+        <b>1850 ·&nbsp; cooler</b>
+        <b>today ·&nbsp; +1.5°C</b>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ================= PHILOSOPHY ================= -->
 <section class="section">
@@ -218,6 +229,62 @@
         <div class="mstep"><div class="mstep__no">3</div><div><h3>Implement</h3><p>Systems, data, delivery. Project structuring, technology procurement, supplier engagement, financing, and the data systems that make next year's disclosure cheaper.</p></div></div>
         <div class="mstep"><div class="mstep__no">4</div><div><h3>Measure</h3><p>Audit-ready performance. Instrumented against milestones in the language investors and auditors recognise — limited or reasonable assurance.</p></div></div>
         <div class="mstep"><div class="mstep__no">5</div><div><h3>Improve</h3><p>Compounding progress. Findings closed, ambition raised where affordable, architecture extended to absorb the next regulatory move at lower marginal cost.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NET ZERO PATHWAY ================= -->
+<section class="section" style="background:var(--surface);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="pathway">
+      <div>
+        <p class="eyebrow reveal">The destination</p>
+        <h2 class="h2 reveal" data-delay="1" style="margin-top:.7rem">From gross emissions to <span class="accent-word">net zero.</span></h2>
+        <p class="lead reveal" data-delay="2" style="margin-top:1.1rem">Net zero isn't a single number — it's the point where what you still emit is matched by what you remove. We cut first, then close the remaining gap with high-integrity removals.</p>
+        <div class="pw-legend reveal" data-delay="3">
+          <div><i style="background:#0C4D56"></i><span><b>Residual emissions</b> — cut at source, year on year.</span></div>
+          <div><i style="background:#2FBFA8"></i><span><b>Removals</b> — nature-based solutions (NBS) + carbon dioxide removal (CDR).</span></div>
+          <div><i style="background:#B98A3E"></i><span><b>Net zero</b> — the balance point, targeted for 2050.</span></div>
+        </div>
+      </div>
+
+      <div class="pathway__chart reveal" data-delay="1" data-draw>
+        <svg viewBox="0 0 820 400" role="img" aria-label="Chart: gross emissions decline while removals rise, reaching net zero by 2050">
+          <defs>
+            <linearGradient id="pwTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0C4D56" stop-opacity=".28"/><stop offset="1" stop-color="#0C4D56" stop-opacity=".04"/></linearGradient>
+            <linearGradient id="pwGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2FBFA8" stop-opacity=".34"/><stop offset="1" stop-color="#2FBFA8" stop-opacity=".08"/></linearGradient>
+          </defs>
+          <!-- grid -->
+          <g stroke="var(--line)" stroke-width="1">
+            <line x1="70" y1="330" x2="790" y2="330"/>
+            <line x1="70" y1="240" x2="790" y2="240" opacity=".5"/>
+            <line x1="70" y1="150" x2="790" y2="150" opacity=".5"/>
+            <line x1="70" y1="60"  x2="790" y2="60"  opacity=".5"/>
+          </g>
+          <!-- removals wedge (between gross and net) -->
+          <path class="fade-area" d="M70,95 C300,120 520,175 770,215 L770,330 C560,285 330,190 70,120 Z" fill="url(#pwGlow)"/>
+          <!-- residual/net area -->
+          <path class="fade-area" d="M70,120 C330,190 560,285 770,330 L70,330 Z" fill="url(#pwTeal)"/>
+          <!-- gross emissions line -->
+          <path class="draw" d="M70,95 C300,120 520,175 770,215" fill="none" stroke="#0C4D56" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- net emissions line -->
+          <path class="draw draw--2" d="M70,120 C330,190 560,285 770,330" fill="none" stroke="#2FBFA8" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="2400"/>
+          <!-- net zero marker -->
+          <g class="pop">
+            <circle cx="770" cy="330" r="7" fill="#B98A3E"/>
+            <circle cx="770" cy="330" r="13" fill="none" stroke="#B98A3E" stroke-width="1.5" opacity=".5"/>
+            <text x="770" y="356" text-anchor="end" font-family="Inter Tight" font-size="15" font-weight="600" fill="#0A1B1E">Net zero</text>
+          </g>
+          <!-- axis labels -->
+          <g font-family="Inter" font-size="13" fill="#51625F">
+            <text x="70" y="352">2025</text>
+            <text x="430" y="352" text-anchor="middle">Today → 2050, illustrative pathway</text>
+            <text x="60" y="66" text-anchor="end">high</text>
+            <text x="60" y="334" text-anchor="end">0</text>
+          </g>
+          <text x="24" y="200" transform="rotate(-90 24 200)" text-anchor="middle" font-family="Inter" font-size="12" fill="#7C8B88" letter-spacing="2">EMISSIONS</text>
+        </svg>
       </div>
     </div>
   </div>
@@ -362,8 +429,8 @@
     <div class="footer__top">
       <div>
         <a class="logo" href="index.html">
-          <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#0C4D56"/><path d="M32 13c-9 8-14 15-14 23a14 14 0 0 0 28 0c0-8-5-15-14-23Z" fill="none" stroke="#2FBFA8" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 46V27M32 33l7-6M32 39l-6-5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span><b>Offset</b><span style="color:#2FBFA8">Ease</span></span>
+          <svg class="logo__mark" viewBox="0 0 140 190" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="11" stroke-linecap="round"><line x1="106.5" y1="56.5" x2="113.6" y2="9"/><line x1="97.8" y1="56" x2="95.4" y2="8.1"/><line x1="77.7" y1="62.1" x2="54.4" y2="22.4"/><line x1="63.7" y1="75.1" x2="27.5" y2="50.2"/><line x1="56.5" y1="93.5" x2="9" y2="86.4"/><line x1="58.7" y1="115.2" x2="19.3" y2="129.8"/><line x1="69.3" y1="131.5" x2="38.7" y2="163.1"/><line x1="84.8" y1="141.3" x2="71.6" y2="177"/></g><circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" stroke-width="13"/></svg>
+          <span class="logo__word" aria-hidden="true">FFSETEASE</span>
         </a>
         <p class="footer__blurb">Climate, carbon and ESG advisory — turning sustainability into business advantage for boards that answer to auditors, regulators and capital.</p>
         <div class="footer__contact">

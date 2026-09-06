@@ -51,6 +51,38 @@
     revs.forEach(function (el) { io.observe(el); });
   }
 
+  /* ---------- Draw-on-scroll (SVG line drawing) -------------------------- */
+  var draws = document.querySelectorAll("[data-draw]");
+  if (draws.length) {
+    if (reduce || !("IntersectionObserver" in window)) {
+      draws.forEach(function (d) { d.classList.add("in-view"); });
+    } else {
+      var dio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in-view"); dio.unobserve(e.target); } });
+      }, { threshold: 0.32 });
+      draws.forEach(function (d) { dio.observe(d); });
+    }
+  }
+
+  /* ---------- Parallax (decorative layers only) -------------------------- */
+  var pxEls = document.querySelectorAll("[data-parallax]");
+  if (pxEls.length && !reduce) {
+    var pticking = false;
+    function pxUpdate() {
+      var vh = window.innerHeight;
+      pxEls.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        var off = (r.top + r.height / 2) - vh / 2;
+        var sp = parseFloat(el.dataset.parallax) || 0;
+        el.style.transform = "translate3d(0," + (-off * sp).toFixed(1) + "px,0)";
+      });
+      pticking = false;
+    }
+    window.addEventListener("scroll", function () { if (!pticking) { requestAnimationFrame(pxUpdate); pticking = true; } }, { passive: true });
+    window.addEventListener("resize", pxUpdate);
+    pxUpdate();
+  }
+
   /* ---------- Count-up --------------------------------------------------- */
   function countUp(el) {
     var target = parseFloat(el.dataset.count);

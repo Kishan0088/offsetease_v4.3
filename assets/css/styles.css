@@ -165,11 +165,12 @@ body.menu-open .nav__toggle span::after { top: 0; transform: rotate(-45deg); }
 .nav__progress { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; transform: scaleX(0); transform-origin: left; background: linear-gradient(90deg, var(--teal), var(--glow)); opacity: 0; transition: opacity .4s; }
 .nav.is-scrolled .nav__progress { opacity: 1; }
 
-/* Logo */
-.logo { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--font-display); font-weight: 600; font-size: 1.16rem; letter-spacing: -0.03em; color: var(--ink); }
-.logo__mark { width: 30px; height: 30px; flex: none; }
-.logo b { font-weight: 600; }
-.logo span { color: var(--teal); }
+/* Logo — sunburst mark + FFSETEASE (the ring is the O) */
+.logo { display: inline-flex; align-items: center; gap: .12rem; color: var(--ink); }
+.logo__mark { width: auto; height: 38px; flex: none; color: var(--teal); overflow: visible; transition: transform .6s var(--ease-out); }
+.logo:hover .logo__mark { transform: rotate(-12deg); }
+.logo__word { font-family: var(--font-display); font-weight: 700; font-size: 1.18rem; letter-spacing: 0.005em; text-transform: uppercase; margin-left: -.06em; }
+.footer .logo__mark { color: #fff; }
 
 /* ==========================================================================
    Hero
@@ -433,6 +434,65 @@ body.menu-open .nav__toggle span::after { top: 0; transform: rotate(-45deg); }
 .pill b { color: var(--teal); font-weight: 600; }
 
 /* ==========================================================================
+   Warming stripes — global temperature signal (immersive band)
+   ========================================================================== */
+.stripes {
+  position: relative; height: clamp(150px, 22vw, 220px); overflow: hidden;
+  border-block: 1px solid var(--line);
+  background:
+    linear-gradient(90deg,
+      #072a30 0%, #0C4D56 16%, #14707c 30%, #2FBFA8 44%,
+      #cdbd8a 58%, #C9A24B 70%, #c47a3f 82%, #b6402f 94%, #9c2f26 100%);
+  background-size: 220% 100%;
+  animation: stripeDrift 26s ease-in-out infinite alternate;
+}
+@keyframes stripeDrift { from { background-position: 0% 0; } to { background-position: 40% 0; } }
+.stripes::before {
+  /* discrete "year" bars */
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, rgba(6,20,23,0) 0 1.35%, rgba(6,20,23,.35) 1.35% 1.55%);
+  mix-blend-mode: multiply;
+}
+.stripes::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(6,30,35,.35), transparent 30%, transparent 70%, rgba(156,47,38,.25));
+}
+.stripes__label { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; }
+.stripes__label .wrap { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.stripes__label p { color: #fff; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.05rem, 2vw, 1.5rem); letter-spacing: -0.02em; max-width: 22ch; text-shadow: 0 1px 20px rgba(6,20,23,.4); }
+.stripes__label span { color: rgba(255,255,255,.85); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+.stripes__ends { display: flex; gap: 1.4rem; }
+.stripes__ends b { color: #fff; font-size: .78rem; font-weight: 600; letter-spacing: .04em; }
+
+/* ==========================================================================
+   Net-zero pathway — scroll-drawn (Carbon · NBS · CDR · Net Zero)
+   ========================================================================== */
+.pathway { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.pathway__chart { width: 100%; }
+.pathway__chart svg { width: 100%; height: auto; overflow: visible; }
+.draw { stroke-dasharray: 2400; stroke-dashoffset: 2400; }
+.in-view .draw { animation: drawLine 2.4s var(--ease-out) forwards; }
+.in-view .draw--2 { animation-delay: .5s; }
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+.fade-area { opacity: 0; transition: opacity 1.4s var(--ease) .9s; }
+.in-view .fade-area { opacity: 1; }
+.pop { opacity: 0; transform: scale(.4); transform-origin: center; transition: opacity .6s var(--ease-out) 2.1s, transform .6s var(--ease-out) 2.1s; }
+.in-view .pop { opacity: 1; transform: scale(1); }
+@media (prefers-reduced-motion: reduce) {
+  .draw { stroke-dashoffset: 0; } .fade-area, .pop { opacity: 1; transform: none; }
+}
+.pw-legend { display: grid; gap: .9rem; margin-top: 1.8rem; }
+.pw-legend div { display: flex; align-items: baseline; gap: .7rem; font-size: .92rem; color: var(--slate); }
+.pw-legend i { width: 14px; height: 14px; border-radius: 4px; flex: none; position: relative; top: 2px; }
+.pw-legend b { color: var(--ink); font-weight: 600; }
+
+/* ==========================================================================
+   Parallax
+   ========================================================================== */
+[data-parallax] { will-change: transform; }
+.orb { position: absolute; border-radius: 50%; filter: blur(48px); pointer-events: none; z-index: 0; opacity: .5; }
+
+/* ==========================================================================
    Responsive
    ========================================================================== */
 @media (max-width: 1080px) {
@@ -452,7 +512,7 @@ body.menu-open .nav__toggle span::after { top: 0; transform: rotate(-45deg); }
   .hero__grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .hero__panel { max-width: 420px; }
   .hero__scroll { display: none; }
-  .method, .reach, .contact, .feat, .feat--rev { grid-template-columns: 1fr; }
+  .method, .reach, .contact, .feat, .feat--rev, .pathway { grid-template-columns: 1fr; }
   .feat--rev .feat__media { order: 0; }
   .cta__inner { grid-template-columns: 1fr; }
   .head--split { grid-template-columns: 1fr; }
