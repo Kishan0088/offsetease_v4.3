@@ -109,6 +109,17 @@
 
   function onReady() { el.classList.add("is-live"); }
 
+  // Focus a region: spin the globe to bring its marker to the front
+  var focusing = false, ftx = 0, fty = 0, activeMarker = -1;
+  window.__earthFocus = function (i) {
+    if (i < 0 || i >= markers.length) return;
+    var p = markers[i].position, len = p.length();
+    fty = -Math.atan2(p.x, p.z);
+    ftx = Math.asin(Math.max(-1, Math.min(1, p.y / len)));
+    focusing = true; activeMarker = i;
+  };
+  window.__earthBlur = function () { focusing = false; activeMarker = -1; };
+
   // Pause when offscreen
   var visible = true;
   if ("IntersectionObserver" in window) {
@@ -119,7 +130,12 @@
   function tick() {
     requestAnimationFrame(tick);
     if (!visible) return;
-    if (!dragging) {
+    if (focusing) {
+      var dy = fty - group.rotation.y;
+      dy = Math.atan2(Math.sin(dy), Math.cos(dy)); // shortest path
+      group.rotation.y += dy * 0.07;
+      group.rotation.x += (ftx - group.rotation.x) * 0.07;
+    } else if (!dragging) {
       group.rotation.y += auto + vy;
       group.rotation.x += vx;
       vx *= 0.94; vy *= 0.94;
@@ -128,7 +144,9 @@
     clouds.rotation.y += 0.0006;
     t += 0.03;
     var pulse = 1 + Math.sin(t) * 0.18;
-    for (var i = 0; i < markers.length; i++) markers[i].scale.setScalar(pulse);
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].scale.setScalar(i === activeMarker ? pulse * 2.3 : pulse);
+    }
     renderer.render(scene, camera);
   }
   tick();

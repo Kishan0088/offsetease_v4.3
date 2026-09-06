@@ -204,17 +204,26 @@
   });
 
   /* ---------- Cinematic video: guard perf on small screens / data-saver -- */
-  var cine = document.querySelector(".cinema__video");
-  if (cine) {
+  var cines = document.querySelectorAll(".cinema__video");
+  if (cines.length) {
     var small = window.matchMedia("(max-width: 700px)").matches;
     var saveData = navigator.connection && navigator.connection.saveData;
     if (reduce || small || saveData) {
-      cine.removeAttribute("autoplay");
-      cine.preload = "none";
-      try { cine.pause(); } catch (e) {}
-      // keep the poster image as a still backdrop
+      cines.forEach(function (cine) {
+        cine.removeAttribute("autoplay");
+        cine.preload = "none";
+        try { cine.pause(); } catch (e) {}
+      });
     }
   }
+
+  /* ---------- Region list ↔ 3D globe -------------------------------------- */
+  document.querySelectorAll(".region[data-idx]").forEach(function (r) {
+    var i = parseInt(r.dataset.idx, 10);
+    r.addEventListener("mouseenter", function () { if (window.__earthFocus) window.__earthFocus(i); });
+    r.addEventListener("mouseleave", function () { if (window.__earthBlur) window.__earthBlur(); });
+    r.addEventListener("click", function () { if (window.__earthFocus) window.__earthFocus(i); });
+  });
 
   var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
