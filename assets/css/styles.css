@@ -131,6 +131,31 @@ p { margin: 0; }
 .tlink svg { width: 15px; height: 15px; transition: transform .4s var(--ease-out); }
 .tlink:hover svg { transform: translateX(3px); }
 
+/* Lenis smooth scroll (recommended base styles) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ==========================================================================
+   Preloader — cinematic arrival
+   ========================================================================== */
+.preloader { position: fixed; inset: 0; z-index: 3000; background: var(--teal-abyss); display: grid; place-items: center; animation: preAuto .9s var(--ease) 2.4s forwards; }
+.preloader.done { animation: preAuto .9s var(--ease) forwards; }
+.pre-skip .preloader { display: none !important; }
+@keyframes preAuto { to { transform: translateY(-101%); visibility: hidden; } }
+.pre__inner { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; animation: preIn 1s var(--ease-out) both; }
+@keyframes preIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.pre__logo { width: clamp(150px, 34vw, 200px); height: 74px; background: #fff; -webkit-mask: url("../img/offsetease-logo.png") center / contain no-repeat; mask: url("../img/offsetease-logo.png") center / contain no-repeat; }
+.pre__tag { color: rgba(255,255,255,.6); font-size: .72rem; letter-spacing: .26em; text-transform: uppercase; }
+.pre__bar { width: 150px; height: 2px; background: rgba(255,255,255,.14); border-radius: 2px; overflow: hidden; }
+.pre__bar i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--teal), var(--glow)); transform: translateX(-100%); animation: preBar 1.9s var(--ease) forwards; }
+@keyframes preBar { to { transform: translateX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .preloader { animation: preAuto .3s linear .2s forwards; }
+  .pre__bar i { animation: none; transform: none; }
+}
+
 /* ==========================================================================
    Navigation
    ========================================================================== */

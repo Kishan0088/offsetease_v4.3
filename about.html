@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>try{if(sessionStorage.getItem("oe_seen"))document.documentElement.classList.add("pre-skip");else sessionStorage.setItem("oe_seen","1");}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Approach — OffsetEase</title>
 <meta name="description" content="Why OffsetEase exists, how we work, and the five-stage methodology that turns climate exposure into business advantage. Senior-led, integrated, built for scrutiny.">
@@ -16,6 +17,13 @@
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pre__inner">
+    <span class="pre__logo"></span>
+    <span class="pre__tag">Climate · Carbon · Capital</span>
+    <span class="pre__bar"><i></i></span>
+  </div>
+</div>
 
 <header class="nav is-scrolled" id="nav">
   <div class="wrap nav__inner">
@@ -202,6 +210,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

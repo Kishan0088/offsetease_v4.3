@@ -5,6 +5,37 @@
   "use strict";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---------- Preloader dismiss ----------------------------------------- */
+  var pre = document.getElementById("preloader");
+  if (pre) {
+    window.addEventListener("load", function () {
+      setTimeout(function () { pre.classList.add("done"); }, reduce ? 0 : 350);
+    });
+    // safety: never let it linger
+    setTimeout(function () { pre.classList.add("done"); }, 3000);
+  }
+
+  /* ---------- Lenis smooth inertia scroll -------------------------------- */
+  if (!reduce && typeof Lenis !== "undefined") {
+    try {
+      var lenis = new Lenis({ lerp: 0.09, smoothWheel: true, wheelMultiplier: 1 });
+      function lraf(time) { lenis.raf(time); requestAnimationFrame(lraf); }
+      requestAnimationFrame(lraf);
+      // in-page anchor links → smooth via Lenis
+      document.querySelectorAll('a[href^="#"], a[href*=".html#"]').forEach(function (a) {
+        var href = a.getAttribute("href");
+        var hashOnly = href.charAt(0) === "#";
+        if (!hashOnly) return; // let cross-page links navigate normally
+        a.addEventListener("click", function (e) {
+          var id = href.slice(1);
+          var t = id && document.getElementById(id);
+          if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -80 }); }
+        });
+      });
+      window.__lenis = lenis;
+    } catch (e) {}
+  }
+
   /* ---------- Nav: scroll state, hide-on-scroll, progress ---------------- */
   var nav = document.querySelector(".nav");
   var progress = document.querySelector(".nav__progress");
