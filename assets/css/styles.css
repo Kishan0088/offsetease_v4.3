@@ -499,6 +499,26 @@ body.menu-open .nav:not(.is-scrolled) .nav__link { color: var(--ink); opacity: 1
 }
 
 /* ==========================================================================
+   Representative engagements (case studies) + editorial pull-quote
+   ========================================================================== */
+.cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+.case { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.8rem 1.6rem 1.5rem; display: flex; flex-direction: column; gap: .7rem; overflow: hidden; transition: transform .55s var(--ease-out), box-shadow .55s var(--ease-out), border-color .5s; }
+.case::after { content: ""; position: absolute; left: 0; top: 0; height: 3px; width: 100%; background: linear-gradient(90deg, var(--teal), var(--glow)); transform: scaleX(0); transform-origin: left; transition: transform .55s var(--ease-out); }
+.case:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: transparent; }
+.case:hover::after { transform: scaleX(1); }
+.case__tag { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .13em; text-transform: uppercase; color: var(--teal); }
+.case h3 { font-size: 1.16rem; letter-spacing: -0.015em; }
+.case p { font-size: .93rem; color: var(--slate); }
+.case__ill { margin-top: auto; padding-top: .6rem; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--slate-soft); }
+@media (max-width: 1080px) { .cases-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .cases-grid { grid-template-columns: 1fr; } }
+
+.pullquote { background: var(--teal-abyss); color: #fff; text-align: center; overflow: hidden; }
+.pullquote .wrap { max-width: 24ch; }
+.pullquote blockquote { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.9rem, 5vw, 3.6rem); letter-spacing: -0.03em; line-height: 1.12; }
+.pullquote cite { display: block; margin-top: 1.6rem; font-family: var(--font-mono); font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; color: var(--glow); font-style: normal; }
+
+/* ==========================================================================
    Stats band
    ========================================================================== */
 .band { background: var(--teal-abyss); color: #fff; position: relative; overflow: hidden; }
